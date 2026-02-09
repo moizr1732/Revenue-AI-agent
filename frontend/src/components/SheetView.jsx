@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import apiClient from '../api'
 
 const SheetView = () => {
   const [sheetId, setSheetId] = useState('1IradqvjgkrRNkdYa13qUsLgPzNq0YCCUjDV3mwGgvZg')
@@ -11,7 +11,7 @@ const SheetView = () => {
     try {
       setLoading(true)
       setError(null)
-      const res = await axios.get(`/api/sheets/read?sheet_id=${sheetId}`)
+      const res = await apiClient.get(`/api/sheets/read?sheet_id=${sheetId}`)
       setRows(res.data.rows)
     } catch (e) {
       setError(e.response?.data?.error || e.message)

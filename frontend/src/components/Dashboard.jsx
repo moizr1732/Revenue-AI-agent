@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import apiClient from '../api'
 import DealCard from './DealCard'
 import Metrics from './Metrics'
 import AnalysisControls from './AnalysisControls'
@@ -20,8 +20,8 @@ const Dashboard = () => {
     try {
       setLoading(true)
       const [dealsResponse, statusResponse] = await Promise.all([
-        axios.get('/api/deals'),
-        axios.get('/api/status')
+        apiClient.get('/api/deals'),
+        apiClient.get('/api/status')
       ])
       
       setDeals(dealsResponse.data.deals || [])
@@ -48,7 +48,7 @@ const Dashboard = () => {
   const triggerAnalysis = async () => {
     try {
       setAnalyzing(true)
-      await axios.post('/api/analyze')
+      await apiClient.post('/api/analyze')
       
       // Wait a bit for analysis to complete, then refresh
       setTimeout(fetchDashboardData, 5000)
